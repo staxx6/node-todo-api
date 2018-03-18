@@ -7,12 +7,12 @@ const {Todo} = require('./../models/todo');
 
 const todos = [{
     _id: new ObjectID(),
-    text: 'First test to todo'
+    text: 'First test to todo',
 }, {
     _id: new ObjectID(),
     text: 'Second test to todo',
     complete: true,
-    completedAt: 333
+    completedAt: 333,
 }];
 
 beforeEach((done) => {
@@ -33,7 +33,7 @@ describe('POST /todos', () => {
                 expect(res.body.text).toBe(text);
             })
             .end((err, res) => {
-                if(err) {
+                if (err) {
                     return done(err);
                 }
 
@@ -51,7 +51,7 @@ describe('POST /todos', () => {
             .send({})
             .expect(400)
             .end((err, res) => {
-                if(err) {
+                if (err) {
                     return done(err);
                 }
 
@@ -113,7 +113,7 @@ describe('DELETE /todos/:id', () => {
                 expect(res.body.todo._id).toBe(hexId);
             })
             .end((err, res) => {
-                if(err) {
+                if (err) {
                     return done(err);
                 }
 
@@ -150,7 +150,7 @@ describe('PATCH /todos/:id', () => {
             .patch(`/todos/${hexId}`)
             .send({
                 completed: true,
-                text
+                text,
             })
             .expect(200)
             .expect((res) => {
@@ -158,7 +158,7 @@ describe('PATCH /todos/:id', () => {
                 expect(res.body.todo.completed).toBe(true);
                 expect(typeof res.body.todo.completedAt).toBe('number');
             })
-            .end(done)
+            .end(done);
     });
 
     it('should clear completed when todo is not completed', (done) => {
@@ -169,7 +169,7 @@ describe('PATCH /todos/:id', () => {
             .patch(`/todos/${hexId}`)
             .send({
                 completed: false,
-                text
+                text,
             })
             .expect(200)
             .expect((res) => {
@@ -177,6 +177,6 @@ describe('PATCH /todos/:id', () => {
                 expect(res.body.todo.completed).toBe(false);
                 expect(res.body.todo.completedAt).toBeNull();
             })
-            .end(done)
+            .end(done);
     });
 });
